@@ -1,0 +1,41 @@
+repos:
+  - repo: local
+    hooks:
+      - id: autoflake
+        name: autoflake
+        stages: [commit]
+        language: system
+        entry: autoflake
+        types: [python]
+        require_serial: true
+        exclude: __init__.py
+        args:
+          - "--remove-all-unused-imports"
+          - "--remove-unused-variables"
+          - "--recursive"
+          - "--in-place"
+
+      - id: black
+        name: black
+        stages: [commit]
+        language: system
+        entry: black
+        types: [python]
+        args: ["--target-version", "py311"]
+
+
+      - id: flake8
+        name: flake8
+        stages: [commit]
+        language: system
+        entry: flake8 .
+        types: [python]
+        exclude: .github,.venv,__pycache__,__init__.py,.mypy_cache,.pytest_cache
+
+      - id: mypy
+        name: mypy
+        stages: [commit]
+        language: system
+        entry: mypy .
+        types: [python]
+        pass_filenames: false
