@@ -1,6 +1,8 @@
-POETRY := poetry
+POETRY=poetry
 
 install:
+	$(POETRY) install
+
 run:
 	uvicorn main:app --reload --port 8000
 
