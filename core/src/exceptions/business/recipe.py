@@ -6,5 +6,5 @@ class RecipeBusinessException(BusinessException):
 
 
 class RecipeCreateException(CreateException):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(entity_type="Recipe")
