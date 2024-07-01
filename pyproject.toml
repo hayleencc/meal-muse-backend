@@ -13,6 +13,17 @@ force_grid_wrap = 0
 use_parentheses = true
 skip = ["data/postgres", ".venv/"]
 
+[tool.mypy]
+ignore_missing_imports = true
+exclude = [
+    "adapters/tests",
+    "api/tests",
+    "core/tests",
+    "core/src/exceptions/"
+]
+disable_error_code = ["call-arg", "attr-defined"]
+disallow_untyped_defs = true
+
 
 [tool.poetry]
 name = "meal-muse-api"
@@ -31,6 +42,7 @@ isort = "^5.13.2"
 pre-commit = "^3.7.1"
 autoflake = "^2.3.1"
 mypy = "^1.10.1"
+pytest = "^8.2.2"
 
 [build-system]
 requires = ["poetry-core"]

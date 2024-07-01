@@ -13,7 +13,7 @@ override AUTOFLAKE_FORMAT=echo Run autoflake...; autoflake \
 	--in-place . \
 	--exclude=__init__.py \
 	--exclude=.venv/ \
-	--exclude=data/
+	--exclude=data/;
 
 format:
 	${AUTOFLAKE_FORMAT}
@@ -25,3 +25,7 @@ lint:
 	$(POETRY) run flake8 
 	$(POETRY) run black .
 	$(POETRY) run isort .
+
+test:
+	export PYTHONPATH=$(pwd):$PYTHONPATH;
+	pytest;
