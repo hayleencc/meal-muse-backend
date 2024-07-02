@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, NamedTuple, Optional
 
 
-class Recipe(NamedTuple):
+class EditRecipeResponse(NamedTuple):
     recipe_id: str
     title: str
     description: str

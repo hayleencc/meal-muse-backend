@@ -1,5 +1,4 @@
 
-from datetime import datetime
 
 from core.src.exceptions import (
     RecipeBusinessException,
@@ -18,9 +17,7 @@ class CreateRecipe:
 
     def __call__(self, request: CreateRecipeRequest) -> CreateRecipeResponse:
         try:
-            now = datetime.now()
-            created_date = now.strftime("%d/%m/%Y %H:%M:%S")
-            recipe = Recipe(**request._asdict(), created_at=created_date, updated_at=created_date)
+            recipe = Recipe(**request._asdict())
 
             response = self.recipe_repository.create(recipe)
 

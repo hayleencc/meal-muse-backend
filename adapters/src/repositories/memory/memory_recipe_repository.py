@@ -9,7 +9,7 @@ class MemoryRecipeRepository(RecipeRepository):
     recipes: List[Recipe]
 
     def __init__(self) -> None:
-        self.recipes = []
+        self.recipes: list[Recipe] = []
 
     def create(self, recipe: Recipe) -> Optional[Recipe]:
         try:
@@ -20,14 +20,14 @@ class MemoryRecipeRepository(RecipeRepository):
 
     def get_by_id(self, recipe_id: str) -> Optional[Recipe]:
         try:
-            return next((recipe for recipe in self.recipes if recipe.id == recipe_id), None)
+            return next((recipe for recipe in self.recipes if recipe.recipe_id == recipe_id), None)
         except Exception:
             raise RecipeRepositoryException(method="get by id")
 
     def edit(self, recipe_to_edit: Recipe) -> Optional[Recipe]:
         try:
             for recipe in self.recipes:
-                if recipe.id == recipe_to_edit.id:
+                if recipe.recipe_id == recipe_to_edit.recipe_id:
                     self.recipes.remove(recipe)
                     self.recipes.append(recipe_to_edit)
                     return recipe_to_edit
@@ -42,4 +42,23 @@ class MemoryRecipeRepository(RecipeRepository):
             raise RecipeRepositoryException(method="list")
 
     def delete(self, recipe_id: str) -> Optional[Recipe]:
-        raise NotImplementedError
+        try:
+            recipe = self.get_by_id(recipe_id)
+            if recipe is not None:
+                modified_recipe = Recipe(
+                    recipe_id=recipe.recipe_id,
+                    title=recipe.title,
+                    description=recipe.description,
+                    ingredients=recipe.ingredients,
+                    steps=recipe.steps,
+                    image_url=recipe.image_url,
+                    created_at=recipe.created_at,
+                    updated_at=recipe.updated_at,
+                    is_archived=True,
+                )
+                self.recipes.remove(recipe)
+                self.recipes.append(modified_recipe)
+                return modified_recipe
+            return None
+        except Exception:
+            raise RecipeRepositoryException(method="delete")

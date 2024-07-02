@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, NamedTuple, Optional
 
 
@@ -8,5 +9,6 @@ class CreateRecipeResponse(NamedTuple):
     ingredients: List[str]
     steps: List[str]
     image_url: Optional[str]
-    created_at: str
-    updated_at: Optional[str]
+    created_at: Optional[datetime | str]
+    updated_at: Optional[datetime | str]
+    is_archived: bool
