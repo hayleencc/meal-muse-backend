@@ -27,7 +27,7 @@ class MemoryRecipeRepository(RecipeRepository):
     def edit(self, recipe_to_edit: Recipe) -> Optional[Recipe]:
         try:
             for recipe in self.recipes:
-                if recipe.id == recipe_to_edit.id:
+                if recipe.recipe_id == recipe_to_edit.recipe_id:
                     self.recipes.remove(recipe)
                     self.recipes.append(recipe_to_edit)
                     return recipe_to_edit
