@@ -15,14 +15,10 @@ skip = ["data/postgres", ".venv/"]
 
 [tool.mypy]
 ignore_missing_imports = true
-exclude = [
-    "adapters/tests",
-    "api/tests",
-    "core/tests",
-    "core/src/exceptions/"
-]
+exclude = ["adapters/tests", "api/tests", "core/tests","data/"]
 disable_error_code = ["call-arg", "attr-defined"]
 disallow_untyped_defs = true
+disallow_untyped_calls = true
 
 
 [tool.poetry]
@@ -43,6 +39,9 @@ pre-commit = "^3.7.1"
 autoflake = "^2.3.1"
 mypy = "^1.10.1"
 pytest = "^8.2.2"
+sqlalchemy = "^2.0.31"
+mangum = "^0.17.0"
+psycopg2-binary = "^2.9.9"
 
 [build-system]
 requires = ["poetry-core"]
