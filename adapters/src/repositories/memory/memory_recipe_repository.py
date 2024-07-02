@@ -20,7 +20,7 @@ class MemoryRecipeRepository(RecipeRepository):
 
     def get_by_id(self, recipe_id: str) -> Optional[Recipe]:
         try:
-            return next((recipe for recipe in self.recipes if recipe.id == recipe_id), None)
+            return next((recipe for recipe in self.recipes if recipe.recipe_id == recipe_id), None)
         except Exception:
             raise RecipeRepositoryException(method="get by id")
 

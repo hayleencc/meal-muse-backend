@@ -1,2 +1,2 @@
-from .base import AlreadyExistsException, BusinessException, CreateException
-from .recipe import RecipeBusinessException, RecipeCreateException
+from .base import AlreadyExistsException, BusinessException, CreateException, NotFoundException
+from .recipe import RecipeBusinessException, RecipeCreateException, RecipeNotFoundException

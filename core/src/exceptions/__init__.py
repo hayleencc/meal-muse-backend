@@ -1,2 +1,2 @@
-from .business import RecipeBusinessException, RecipeCreateException
+from .business import RecipeBusinessException, RecipeCreateException, RecipeNotFoundException
 from .repository import RecipeRepositoryException
