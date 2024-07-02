@@ -9,5 +9,6 @@ class Recipe(NamedTuple):
     ingredients: List[str]
     steps: List[str]
     image_url: Optional[str]
+    is_archived: bool
     created_at: Optional[datetime | str]
     updated_at: Optional[datetime | str]

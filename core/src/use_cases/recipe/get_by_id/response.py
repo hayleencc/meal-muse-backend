@@ -9,5 +9,6 @@ class GetRecipeByIdResponse(NamedTuple):
     ingredients: List[str]
     steps: List[str]
     image_url: Optional[str]
-    created_at: Optional[datetime]
-    updated_at: Optional[datetime]
+    created_at: Optional[datetime | str]
+    updated_at: Optional[datetime | str]
+    is_archived: bool

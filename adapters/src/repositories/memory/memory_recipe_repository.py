@@ -9,7 +9,7 @@ class MemoryRecipeRepository(RecipeRepository):
     recipes: List[Recipe]
 
     def __init__(self) -> None:
-        self.recipes = []
+        self.recipes: list[Recipe] = []
 
     def create(self, recipe: Recipe) -> Optional[Recipe]:
         try:
@@ -42,4 +42,23 @@ class MemoryRecipeRepository(RecipeRepository):
             raise RecipeRepositoryException(method="list")
 
     def delete(self, recipe_id: str) -> Optional[Recipe]:
-        raise NotImplementedError
+        try:
+            recipe = self.get_by_id(recipe_id)
+            if recipe is not None:
+                modified_recipe = Recipe(
+                    recipe_id=recipe.recipe_id,
+                    title=recipe.title,
+                    description=recipe.description,
+                    ingredients=recipe.ingredients,
+                    steps=recipe.steps,
+                    image_url=recipe.image_url,
+                    created_at=recipe.created_at,
+                    updated_at=recipe.updated_at,
+                    is_archived=True,
+                )
+                self.recipes.remove(recipe)
+                self.recipes.append(modified_recipe)
+                return modified_recipe
+            return None
+        except Exception:
+            raise RecipeRepositoryException(method="delete")

@@ -7,7 +7,6 @@ from core.src.exceptions import RecipeBusinessException, RecipeRepositoryExcepti
 from core.src.use_cases.recipe import (
     CreateRecipe,
     CreateRecipeRequest,
-    CreateRecipeResponse,
     ListRecipe,
     ListRecipeResponse,
 )
@@ -15,7 +14,6 @@ from core.src.use_cases.recipe import (
 
 def test_list_recipe_should_return_a_list_of_recipes(
     recipe_create_request: CreateRecipeRequest,
-    recipe_create_response: CreateRecipeResponse,
 ):
     recipe_repository: MemoryRecipeRepository = MemoryRecipeRepository()
     create_recipe_use_case = CreateRecipe(recipe_repository)
