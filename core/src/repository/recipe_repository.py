@@ -1,10 +1,10 @@
-from abc import abstractmethod
-from typing import List, NamedTuple, Optional
+from abc import ABC, abstractmethod
+from typing import List, Optional
 
 from core.src.models import Recipe
 
 
-class RecipeRepository(NamedTuple):
+class RecipeRepository(ABC):
     @abstractmethod
     def create(self, recipe: Recipe) -> Optional[Recipe]:
         raise NotImplementedError
