@@ -52,8 +52,23 @@ class SQLRecipeRepository(RecipeRepository):
             self.session.rollback()
             raise RecipeRepositoryException(method="get_by_id")
 
-    def edit(self, recipe: Recipe) -> Optional[Recipe]:
-        return None
+    def edit(self, updated_recipe: Recipe) -> Optional[Recipe]:
+        try:
+            recipe_to_edit = self.session.query(RecipeRecord).filter_by(
+                recipe_id=updated_recipe.recipe_id).first()
+            if recipe_to_edit is None:
+                return None
+            recipe_to_edit.title = updated_recipe.title  # type: ignore
+            recipe_to_edit.description = updated_recipe.description  # type: ignore
+            recipe_to_edit.ingredients = updated_recipe.ingredients  # type: ignore
+            recipe_to_edit.steps = updated_recipe.steps  # type: ignore
+            recipe_to_edit.image_url = updated_recipe.image_url  # type: ignore
+            recipe_to_edit.updated_at = updated_recipe.updated_at  # type: ignore
+            self.session.commit()
+            return updated_recipe
+        except Exception:
+            self.session.rollback()
+            raise RecipeRepositoryException(method="edit")
 
     def delete(self, recipe_id: str) -> Optional[Recipe]:
         return None
