@@ -23,12 +23,11 @@ class SQLRecipeRepository(RecipeRepository):
                 steps=recipe.steps,
                 image_url=recipe.image_url
             )
-            with self.session as session:
-                session.add(recipe_to_create)
-                session.flush()
-                session.commit()
-                sector_created_id = str(recipe_to_create.recipe_id)
-            return Recipe(**{**recipe._asdict(), 'recipe_id': sector_created_id})
+            self.session.add(recipe_to_create)
+            self.session.flush()
+            self.session.commit()
+            recipe_created_id = str(recipe_to_create.recipe_id)
+            return Recipe(**{**recipe._asdict(), 'recipe_id': recipe_created_id})
         except Exception:
             self.session.rollback()
             raise RecipeRepositoryException(method="create")
@@ -43,4 +42,20 @@ class SQLRecipeRepository(RecipeRepository):
         return None
 
     def list_all(self) -> List[Recipe]:
-        return []
+        try:
+            records = (self.session.query(RecipeRecord).filter(RecipeRecord.is_archived.is_(False)).all())
+            recipes_found = [Recipe(
+                recipe_id=str(record.recipe_id),
+                title=str(record.title),
+                description=str(record.description),
+                ingredients=list(record.ingredients) if record.ingredients else [],
+                steps=list(record.steps) if record.steps else [],
+                image_url=str(record.image_url),
+                is_archived=bool(record.is_archived),
+                created_at=record.created_at,  # type: ignore
+                updated_at=record.updated_at  # type: ignore
+            ) for record in records] if records else []
+            return recipes_found
+        except Exception:
+            self.session.rollback()
+            raise RecipeRepositoryException(method="list_all")
