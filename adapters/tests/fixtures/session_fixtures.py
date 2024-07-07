@@ -41,3 +41,13 @@ def mock_session_query_all_return_two_objects() -> MagicMock:
     mock_query.filter.return_value = mock_query
     mock_query.all.return_value = [MagicMock(), MagicMock()]
     return mock_session
+
+
+@pytest.fixture(scope='function')
+def mock_session_query_get_by_id_return_none() -> MagicMock:
+    mock_session = MagicMock(spec=Session)
+    mock_query = MagicMock()
+    mock_session.query.return_value = mock_query
+    mock_query.filter.return_value = mock_query
+    mock_query.first.return_value = None
+    return mock_session

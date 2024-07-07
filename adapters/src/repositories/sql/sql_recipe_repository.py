@@ -33,7 +33,24 @@ class SQLRecipeRepository(RecipeRepository):
             raise RecipeRepositoryException(method="create")
 
     def get_by_id(self, recipe_id: str) -> Optional[Recipe]:
-        return None
+        try:
+            recipe_found = self.session.query(RecipeRecord).filter(RecipeRecord.recipe_id == recipe_id).first()
+            if recipe_found is not None:
+                return Recipe(
+                    recipe_id=str(recipe_found.recipe_id),
+                    title=str(recipe_found.title),
+                    description=str(recipe_found.description),
+                    ingredients=list(recipe_found.ingredients) if recipe_found.ingredients else [],
+                    steps=list(recipe_found.steps) if recipe_found.steps else [],
+                    image_url=str(recipe_found.image_url),
+                    is_archived=bool(recipe_found.is_archived),
+                    created_at=recipe_found.created_at,  # type: ignore
+                    updated_at=recipe_found.updated_at  # type: ignore
+                )
+            return None
+        except Exception:
+            self.session.rollback()
+            raise RecipeRepositoryException(method="get_by_id")
 
     def edit(self, recipe: Recipe) -> Optional[Recipe]:
         return None
