@@ -18,7 +18,7 @@ class RecipeRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def delete(self, recipe_id: str) -> Optional[Recipe]:
+    def delete(self, recipe_id: str) -> bool:
         raise NotImplementedError
 
     @abstractmethod

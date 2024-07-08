@@ -1,8 +1,9 @@
+from datetime import datetime
 from typing import List, Optional
 
 from sqlalchemy.orm import Session
 
-from core.src.exceptions import RecipeRepositoryException
+from core.src.exceptions import RecipeNotFoundException, RecipeRepositoryException
 from core.src.models import Recipe
 from core.src.repository import RecipeRepository
 
@@ -28,6 +29,7 @@ class SQLRecipeRepository(RecipeRepository):
             self.session.commit()
             recipe_created_id = str(recipe_to_create.recipe_id)
             return Recipe(**{**recipe._asdict(), 'recipe_id': recipe_created_id})
+
         except Exception:
             self.session.rollback()
             raise RecipeRepositoryException(method="create")
@@ -48,6 +50,7 @@ class SQLRecipeRepository(RecipeRepository):
                     updated_at=recipe_found.updated_at  # type: ignore
                 )
             return None
+
         except Exception:
             self.session.rollback()
             raise RecipeRepositoryException(method="get_by_id")
@@ -66,12 +69,26 @@ class SQLRecipeRepository(RecipeRepository):
             recipe_to_edit.updated_at = updated_recipe.updated_at  # type: ignore
             self.session.commit()
             return updated_recipe
+
         except Exception:
             self.session.rollback()
             raise RecipeRepositoryException(method="edit")
 
-    def delete(self, recipe_id: str) -> Optional[Recipe]:
-        return None
+    def delete(self, recipe_id: str) -> bool:
+        try:
+            recipe_to_delete = (self.session.query(RecipeRecord).filter_by(
+                recipe_id=recipe_id).first())
+            if not recipe_to_delete:
+                raise RecipeNotFoundException(recipe_id=recipe_id)
+
+            recipe_to_delete.is_archived = True  # type: ignore
+            recipe_to_delete.updated_at = datetime.now()  # type: ignore
+            self.session.commit()
+            return bool(recipe_to_delete.is_archived)
+
+        except Exception:
+            self.session.rollback()
+            raise RecipeRepositoryException(method="delete")
 
     def list_all(self) -> List[Recipe]:
         try:
@@ -88,6 +105,7 @@ class SQLRecipeRepository(RecipeRepository):
                 updated_at=record.updated_at  # type: ignore
             ) for record in records] if records else []
             return recipes_found
+
         except Exception:
             self.session.rollback()
             raise RecipeRepositoryException(method="list_all")
