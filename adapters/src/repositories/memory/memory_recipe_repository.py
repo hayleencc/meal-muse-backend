@@ -41,7 +41,7 @@ class MemoryRecipeRepository(RecipeRepository):
         except Exception:
             raise RecipeRepositoryException(method="list")
 
-    def delete(self, recipe_id: str) -> Optional[Recipe]:
+    def delete(self, recipe_id: str) -> bool:
         try:
             recipe = self.get_by_id(recipe_id)
             if recipe is not None:
@@ -58,7 +58,7 @@ class MemoryRecipeRepository(RecipeRepository):
                 )
                 self.recipes.remove(recipe)
                 self.recipes.append(modified_recipe)
-                return modified_recipe
-            return None
+                return True
+            return False
         except Exception:
             raise RecipeRepositoryException(method="delete")
