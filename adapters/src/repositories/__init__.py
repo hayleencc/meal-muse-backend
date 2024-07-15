@@ -1,2 +1,2 @@
 from .memory import MemoryRecipeRepository
-from .sql import SQLRecipeRepository
+from .sql import SessionManager, SQLRecipeRepository
