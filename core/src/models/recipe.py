@@ -3,7 +3,6 @@ from typing import List, NamedTuple, Optional
 
 
 class Recipe(NamedTuple):
-    recipe_id: str
     title: str
     description: str
     ingredients: List[str]
@@ -12,3 +11,4 @@ class Recipe(NamedTuple):
     is_archived: bool
     created_at: Optional[datetime | str]
     updated_at: Optional[datetime | str]
+    recipe_id: Optional[str] = None
