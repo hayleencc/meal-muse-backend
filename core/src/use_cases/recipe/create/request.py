@@ -10,4 +10,5 @@ class CreateRecipeRequest(NamedTuple):
     image_url: Optional[str]
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
+    recipe_id: Optional[str] = None
     is_archived: Optional[bool] = False
