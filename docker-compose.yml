@@ -27,8 +27,6 @@ services:
       - ./adapters:/api/adapters/
     env_file:
       - .env
-    environment:
-      - SQL_URL=postgresql://postgres:postgres@database:5432/mealmuse_db
     links:
       - "meal-muse-db:database"
     depends_on:

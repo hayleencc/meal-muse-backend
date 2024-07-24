@@ -6,6 +6,9 @@ on:
             - main
     pull_request:
 
+env:
+    SQL_URL: ${{ secrets.SQL_URL }}
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -32,6 +35,8 @@ jobs:
                   source .venv/bin/activate && make lint
 
             - name: Run tests
+              env:
+                  SQL_URL: ${{ env.SQL_URL }}
               run: |
                     source .venv/bin/activate && make test
             
