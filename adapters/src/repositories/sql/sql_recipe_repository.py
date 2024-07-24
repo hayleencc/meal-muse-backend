@@ -17,7 +17,6 @@ class SQLRecipeRepository(RecipeRepository):
     def create(self, recipe: Recipe) -> Optional[Recipe]:
         try:
             recipe_to_create = RecipeRecord(
-                recipe_id=recipe.recipe_id,
                 title=recipe.title,
                 description=recipe.description,
                 ingredients=recipe.ingredients,
@@ -28,7 +27,10 @@ class SQLRecipeRepository(RecipeRepository):
             self.session.flush()
             self.session.commit()
             recipe_created_id = str(recipe_to_create.recipe_id)
-            return Recipe(**{**recipe._asdict(), 'recipe_id': recipe_created_id})
+            recipe_created_date = recipe_to_create.created_at
+            recipe_updated_date = recipe_to_create.updated_at
+            return Recipe(**{**recipe._asdict(), 'recipe_id': recipe_created_id,
+                             'created_at': recipe_created_date, 'updated_at': recipe_updated_date})
 
         except Exception:
             self.session.rollback()

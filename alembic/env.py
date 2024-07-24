@@ -16,7 +16,6 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 sql_url = os.environ["SQL_URL"]
-print(f"SQL_URL: {sql_url}")
 config.set_main_option("sqlalchemy.url", os.environ.get("SQL_URL"))  # type: ignore
 
 # add your model's MetaData object here
