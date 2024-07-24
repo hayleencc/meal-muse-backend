@@ -7,7 +7,7 @@ on:
     pull_request:
 
 env:
-    SQL_URL: ${{ secrets.SQL_URL }}
+  SQL_URL: ${{ secrets.SQL_URL }}
 
 jobs:
     build:
@@ -36,7 +36,7 @@ jobs:
 
             - name: Run tests
               env:
-                  SQL_URL: ${{ env.SQL_URL }}
+                  SQL_URL: ${{ secrets.SQL_URL }}
               run: |
                     source .venv/bin/activate && make test
             
