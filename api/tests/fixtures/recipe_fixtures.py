@@ -7,6 +7,7 @@ from core.src.use_cases.recipe import CreateRecipeResponse
 @pytest.fixture
 def recipe_request_data() -> dict:
     request = {
+        "recipe_id": None,
         "title": "Recipe 1",
         "description": "Description 1",
         "ingredients": ["Ingredient 1", "Ingredient 2"],
