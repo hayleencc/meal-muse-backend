@@ -1,7 +1,7 @@
 import pytest
 
-from api.src.dtos import Recipe
-from core.src.use_cases.recipe import CreateRecipeResponse
+from core.src.models import Recipe
+from core.src.use_cases.recipe import CreateRecipeResponse, ListRecipeResponse
 
 
 @pytest.fixture
@@ -20,7 +20,7 @@ def recipe_request_data() -> dict:
 
 
 @pytest.fixture
-def create_recipe_response() -> Recipe:
+def create_recipe_response():
     return {
         "recipe_id": "f7e0d1e1-6b5d-4f0a-9e9b-1a3b1e7b8f0f",
         "title": "Recipe 1",
@@ -48,3 +48,38 @@ def create_recipe_response_use_case() -> CreateRecipeResponse:
         updated_at="2021-01-01T00:00:00",
 
     )
+
+
+@pytest.fixture
+def list_recipes_response():
+    return [
+        {
+            "recipe_id": str(recipe_id+1),
+            "title": "Recipe " + str(recipe_id+1),
+            "description": "Description",
+            "ingredients": ["Ingredient 1", "Ingredient 2"],
+            "steps": ["Step 1", "Step 2"],
+            "image_url": "https:/mage.com/image.jpg",
+            "is_archived": False,
+            "created_at": "2021-01-01T00:00:00",
+            "updated_at": "2021-01-01T00:00:00",
+        } for recipe_id in range(3)
+    ]
+
+
+@pytest.fixture
+def list_recipes_response_use_case() -> ListRecipeResponse:
+    recipes = [
+        Recipe(
+            recipe_id=str(i+1),
+            title="Recipe " + str(i+1),
+            description="Description",
+            ingredients=["Ingredient 1", "Ingredient 2"],
+            steps=["Step 1", "Step 2"],
+            image_url="https:/mage.com/image.jpg",
+            is_archived=False,
+            created_at="2021-01-01T00:00:00",
+            updated_at="2021-01-01T00:00:00",
+        ) for i in range(3)
+    ]
+    return ListRecipeResponse(recipes=recipes)
