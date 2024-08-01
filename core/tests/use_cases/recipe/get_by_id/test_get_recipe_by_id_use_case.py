@@ -20,7 +20,7 @@ from core.src.use_cases.recipe import (
 def test_get_recipe_by_id_should_return_recipe_when_recipe_exists(
     recipe_repository: MemoryRecipeRepository,
     recipe_create_request: CreateRecipeRequest,
-    get_recipe_by_id_response: GetRecipeByIdResponse,
+    get_recipe_by_id_response_core: GetRecipeByIdResponse,
 ):
     create_recipe_use_case = CreateRecipe(recipe_repository)
     create_recipe_use_case(recipe_create_request)
@@ -29,7 +29,7 @@ def test_get_recipe_by_id_should_return_recipe_when_recipe_exists(
     request = GetRecipeByIdRequest(recipe_id="recipe_1")
     response = get_recipe_by_id_use_case(request=request)
 
-    assert response == get_recipe_by_id_response
+    assert response == get_recipe_by_id_response_core
 
 
 def test_get_recipe_by_id_should_raise_exception_when_recipe_does_not_exist(

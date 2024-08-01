@@ -53,7 +53,7 @@ def recipe_create_response() -> CreateRecipeResponse:
 
 
 @pytest.fixture
-def get_recipe_by_id_response() -> GetRecipeByIdResponse:
+def get_recipe_by_id_response_core() -> GetRecipeByIdResponse:
     now = datetime.now()
     created_date = now.strftime("%d/%m/%Y %H:%M:%S")
     expected_response = GetRecipeByIdResponse(

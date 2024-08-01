@@ -11,8 +11,8 @@ from core.src.use_cases.recipe.get_by_id import GetRecipeByIdRequest, GetRecipeB
 
 
 class GetRecipeById:
-    def __init__(self, recipe_respository: RecipeRepository):
-        self.recipe_respository = recipe_respository
+    def __init__(self, recipe_repository: RecipeRepository):
+        self.recipe_respository = recipe_repository
 
     def __validate__if_recipe_exists(self, recipe: Optional[Recipe], recipe_id: str) -> None:
         if not recipe:
