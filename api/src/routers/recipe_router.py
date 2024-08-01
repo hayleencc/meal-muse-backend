@@ -4,8 +4,18 @@ from fastapi import APIRouter, HTTPException
 
 from api.src.dtos import Recipe
 from core.src.exceptions.business import BusinessException
-from core.src.use_cases import CreateRecipe, CreateRecipeRequest, ListRecipe
-from factories.use_cases import create_recipe_use_case, list_recipes_use_case
+from core.src.use_cases import (
+    CreateRecipe,
+    CreateRecipeRequest,
+    GetRecipeById,
+    GetRecipeByIdRequest,
+    ListRecipe,
+)
+from factories.use_cases import (
+    create_recipe_use_case,
+    get_recipe_by_id_use_case,
+    list_recipes_use_case,
+)
 
 recipe_router = APIRouter(
     prefix="/recipes",
@@ -38,6 +48,18 @@ async def get_recipes() -> List[Recipe]:
         list_use_case: ListRecipe = list_recipes_use_case()
         response = list_use_case()
         return [Recipe(**recipe._asdict()) for recipe in response.recipes] if response.recipes else []
+
+    except BusinessException as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@recipe_router.get("/{recipe_id}")
+async def get_recipe_by_id(recipe_id: str) -> Recipe:
+    try:
+        use_case: GetRecipeById = get_recipe_by_id_use_case()
+        request = GetRecipeByIdRequest(recipe_id=recipe_id)
+        response = use_case(request=request)
+        return Recipe(**response._asdict())
 
     except BusinessException as e:
         raise HTTPException(status_code=400, detail=str(e))
