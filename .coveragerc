@@ -1,0 +1,14 @@
+[run]
+source =
+    adapters/src
+    api/src
+    core/src
+branch = True
+
+omit =
+    */tests/*
+    */migrations/*
+    *__init__.py
+
+[report]
+fail_under = 80
