@@ -31,4 +31,4 @@ test:
 	poetry run coverage report
 
 test-ci:
-	poetry run coverage html
+	poetry run coverage 
