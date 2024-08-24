@@ -3,10 +3,10 @@ from typing import List, NamedTuple, Optional
 
 
 class CreateRecipeRequest(NamedTuple):
-    title: str
-    description: str
-    ingredients: List[str]
-    steps: List[str]
+    title: Optional[str]
+    description: Optional[str]
+    ingredients: Optional[List[str]]
+    steps: Optional[List[str]]
     image_url: Optional[str]
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
