@@ -3,6 +3,7 @@ import pytest
 from core.src.models import Recipe
 from core.src.use_cases.recipe import (
     CreateRecipeResponse,
+    EditRecipeResponse,
     GetRecipeByIdResponse,
     ListRecipeResponse,
 )
@@ -110,6 +111,36 @@ def get_recipe_by_id_response():
         "recipe_id": "f7e0d1e1-6b5d-4f0a-9e9b-1a3b1e7b8f0f",
         "title": "Recipe 1",
         "description": "Description 1",
+        "ingredients": ["Ingredient 1", "Ingredient 2"],
+        "steps": ["Step 1", "Step 2"],
+        "image_url": "https:/mage.com/image.jpg",
+        "is_archived": False,
+        "created_at": "2021-01-01T00:00:00",
+        "updated_at": "2021-01-01T00:00:00",
+    }
+
+
+@pytest.fixture
+def edit_recipe_response_use_case() -> EditRecipeResponse:
+    return EditRecipeResponse(
+        recipe_id="f7e0d1e1-6b5d-4f0a-9e9b-1a3b1e7b8f0f",
+        title="Recipe 1 Updated",
+        description="Description 1 Updated",
+        ingredients=["Ingredient 1", "Ingredient 2"],
+        steps=["Step 1", "Step 2"],
+        image_url="https:/mage.com/image.jpg",
+        is_archived=False,
+        created_at="2021-01-01T00:00:00",
+        updated_at="2021-01-01T00:00:00",
+    )
+
+
+@pytest.fixture
+def edit_recipe_response():
+    return {
+        "recipe_id": "f7e0d1e1-6b5d-4f0a-9e9b-1a3b1e7b8f0f",
+        "title": "Recipe 1 Updated",
+        "description": "Description 1 Updated",
         "ingredients": ["Ingredient 1", "Ingredient 2"],
         "steps": ["Step 1", "Step 2"],
         "image_url": "https:/mage.com/image.jpg",

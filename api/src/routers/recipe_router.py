@@ -7,12 +7,15 @@ from core.src.exceptions.business import BusinessException
 from core.src.use_cases import (
     CreateRecipe,
     CreateRecipeRequest,
+    EditRecipe,
+    EditRecipeRequest,
     GetRecipeById,
     GetRecipeByIdRequest,
     ListRecipe,
 )
 from factories.use_cases import (
     create_recipe_use_case,
+    edit_recipe_use_case,
     get_recipe_by_id_use_case,
     list_recipes_use_case,
 )
@@ -60,6 +63,27 @@ async def get_recipe_by_id(recipe_id: str) -> Recipe:
         request = GetRecipeByIdRequest(recipe_id=recipe_id)
         response = use_case(request=request)
         return Recipe(**response._asdict())
+
+    except BusinessException as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@recipe_router.patch("/")
+async def edit_recipe(recipe: Recipe) -> Recipe:
+    try:
+        if not recipe.recipe_id:
+            raise HTTPException(status_code=422, detail="recipe_id is required for editing a recipe")
+
+        request = EditRecipeRequest(
+            recipe_id=recipe.recipe_id,
+            title=recipe.title,
+            description=recipe.description,
+            ingredients=recipe.ingredients,
+            image_url=recipe.image_url,
+        )
+        edit_use_case: EditRecipe = edit_recipe_use_case()
+        response = edit_use_case(request=request)
+        return Recipe(**response._asdict())  # type: ignore
 
     except BusinessException as e:
         raise HTTPException(status_code=400, detail=str(e))

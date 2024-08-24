@@ -5,10 +5,10 @@ from pydantic import BaseModel
 
 
 class Recipe(BaseModel):
-    title: str
-    description: str
-    ingredients: List[str]
-    steps: List[str]
+    title: Optional[str]
+    description: Optional[str]
+    ingredients: Optional[List[str]]
+    steps: Optional[List[str]]
     image_url: Optional[str]
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
