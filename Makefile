@@ -28,4 +28,7 @@ lint:
 
 test:
 	export PYTHONPATH=$(pwd):$PYTHONPATH;
-	pytest;
+	poetry run coverage report
+
+test-ci:
+	poetry run coverage html
