@@ -24,3 +24,9 @@ class NoneException(BusinessException):
     def __init__(self, entity_type: str):
         message = f"The {entity_type} is None."
         super().__init__(message)
+
+
+class NotDataException(BusinessException):
+    def __init__(self, entity_type: str):
+        message = f"The {entity_type} does not have data to update."
+        super().__init__(message)

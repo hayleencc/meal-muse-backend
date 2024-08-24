@@ -68,7 +68,6 @@ class SQLRecipeRepository(RecipeRepository):
             recipe_to_edit.ingredients = updated_recipe.ingredients  # type: ignore
             recipe_to_edit.steps = updated_recipe.steps  # type: ignore
             recipe_to_edit.image_url = updated_recipe.image_url  # type: ignore
-            recipe_to_edit.updated_at = updated_recipe.updated_at  # type: ignore
             self.session.commit()
             return updated_recipe
 

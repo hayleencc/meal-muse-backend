@@ -3,11 +3,13 @@ from .base import (
     BusinessException,
     CreateException,
     NoneException,
+    NotDataException,
     NotFoundException,
 )
 from .recipe import (
     RecipeBusinessException,
     RecipeCreateException,
     RecipeNoneException,
+    RecipeNotDataException,
     RecipeNotFoundException,
 )

@@ -18,3 +18,8 @@ class RecipeNotFoundException(NotFoundException):
 class RecipeNoneException(BusinessException):
     def __init__(self, entity_id: str) -> None:
         super().__init__(entity_type="Recipe", entity_id=entity_id)
+
+
+class RecipeNotDataException(BusinessException):
+    def __init__(self) -> None:
+        super().__init__(entity_type="Recipe")
