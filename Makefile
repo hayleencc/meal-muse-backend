@@ -32,6 +32,7 @@ test:
 	poetry run coverage report;
 
 test-ci:
-    poetry run coverage run -m pytest;
-    poetry run coverage report;
-	poetry run coverage html;
+    poetry run coverage run -m pytest
+    poetry run coverage report
+    poetry run coverage html
+
