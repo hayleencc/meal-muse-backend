@@ -20,7 +20,7 @@ from core.src.use_cases import (
 def test_edit_recipe_should_return_edited_recipe_when_recipe_exists(
     recipe_repository: MemoryRecipeRepository,
     recipe_create_request: CreateRecipeRequest,
-    edit_recipe_response: EditRecipeResponse,
+    edit_recipe_response_core: EditRecipeResponse,
 ):
     create_recipe_use_case = CreateRecipe(recipe_repository)
     create_recipe_use_case(recipe_create_request)
@@ -31,13 +31,11 @@ def test_edit_recipe_should_return_edited_recipe_when_recipe_exists(
         title="New title",
         description="New description",
         ingredients=["New ingredient"],
-        steps=["New step"],
         image_url="http://new_image.com",
-        updated_at=None,
     )
     response = edit_recipe_use_case(request=request)
 
-    assert response == edit_recipe_response
+    assert response == edit_recipe_response_core
 
 
 def test_edit_recipe_when_recipe_does_not_exist_should_raise_exception(
@@ -51,7 +49,6 @@ def test_edit_recipe_when_recipe_does_not_exist_should_raise_exception(
         ingredients=["New ingredient"],
         steps=["New step"],
         image_url="http://new_image.com",
-        updated_at=None,
     )
 
     with pytest.raises(RecipeNotFoundException):
@@ -72,7 +69,6 @@ def test_edit_recipe_should_raise_exception_when_repository_fails(
         ingredients=["New ingredient"],
         steps=["New step"],
         image_url="http://new_image.com",
-        updated_at=None,
     )
 
     with patch.object(MemoryRecipeRepository, "edit", side_effect=RecipeRepositoryException("edit")):

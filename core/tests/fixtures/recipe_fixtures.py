@@ -71,7 +71,7 @@ def get_recipe_by_id_response_core() -> GetRecipeByIdResponse:
 
 
 @pytest.fixture
-def edit_recipe_response() -> EditRecipeResponse:
+def edit_recipe_response_core() -> EditRecipeResponse:
     now = datetime.now()
     created_date = now.strftime("%d/%m/%Y %H:%M:%S")
     recipe_request = EditRecipeResponse(
@@ -79,10 +79,10 @@ def edit_recipe_response() -> EditRecipeResponse:
         title="New title",
         description="New description",
         ingredients=["New ingredient"],
-        steps=["New step"],
+        steps=["step_1", "step_2"],
         image_url="http://new_image.com",
         is_archived=False,
         created_at=created_date,
-        updated_at=None,
+        updated_at=created_date,
     )
     return recipe_request
