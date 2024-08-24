@@ -29,10 +29,10 @@ lint:
 test:
 	export PYTHONPATH=$(pwd):$PYTHONPATH;
 	poetry run coverage run -m pytest;
-	poetry run coverage report;
+	poetry run coverage report
 
 test-ci:
-    poetry run coverage run -m pytest
-    poetry run coverage report
-    poetry run coverage html
-
+	echo "Running tests with coverage";
+	poetry run coverage run -m pytest;
+	poetry run coverage report;
+	poetry run coverage html
