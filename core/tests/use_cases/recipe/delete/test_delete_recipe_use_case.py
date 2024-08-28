@@ -30,7 +30,7 @@ def test_delete_recipe_when_a_recipe_exists_should_return_true(
 
     assert response is not None
     assert isinstance(response, DeleteRecipeResponse)
-    assert response.is_recipe_archived is True
+    assert response.is_archived is True
 
 
 def test_delete_recipe_when_it_does_not_exist_should_raise_exception(

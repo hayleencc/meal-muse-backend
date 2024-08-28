@@ -1,1 +1,1 @@
-from .recipe_dto import Recipe
+from .recipe_dto import Recipe, RecipeDeleted

@@ -14,3 +14,8 @@ class Recipe(BaseModel):
     updated_at: Optional[datetime]
     is_archived: Optional[bool] = False
     recipe_id: Optional[str] = None
+
+
+class RecipeDeleted(BaseModel):
+    recipe_id: str
+    is_archived: bool
