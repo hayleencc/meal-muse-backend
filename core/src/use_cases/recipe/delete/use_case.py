@@ -18,6 +18,6 @@ class DeleteRecipe():
             if recipe is None:
                 raise RecipeNotFoundException(recipe_id=request.recipe_id)
             response = self.recipe_repository.delete(request.recipe_id)
-            return DeleteRecipeResponse(is_recipe_archived=bool(response))
+            return DeleteRecipeResponse(is_archived=bool(response))
         except RecipeRepositoryException as e:
             raise RecipeBusinessException(str(e))
