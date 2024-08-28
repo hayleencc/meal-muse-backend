@@ -3,6 +3,7 @@ import pytest
 from core.src.models import Recipe
 from core.src.use_cases.recipe import (
     CreateRecipeResponse,
+    DeleteRecipeResponse,
     EditRecipeResponse,
     GetRecipeByIdResponse,
     ListRecipeResponse,
@@ -148,3 +149,21 @@ def edit_recipe_response():
         "created_at": "2021-01-01T00:00:00",
         "updated_at": "2021-01-01T00:00:00",
     }
+
+
+@pytest.fixture
+def delete_recipe_use_case():
+    return DeleteRecipeResponse(is_archived=True)
+
+
+@pytest.fixture
+def delete_recipe_response():
+    return {
+        "is_archived": True,
+        "recipe_id": "f7e0d1e1-6b5d-4f0a-9e9b-1a3b1e7b8f0f",
+    }
+
+
+@pytest.fixture
+def recipe_id():
+    return "f7e0d1e1-6b5d-4f0a-9e9b-1a3b1e7b8f0f"

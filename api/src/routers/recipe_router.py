@@ -2,11 +2,13 @@ from typing import List
 
 from fastapi import APIRouter, HTTPException
 
-from api.src.dtos import Recipe
+from api.src.dtos import Recipe, RecipeDeleted
 from core.src.exceptions.business import BusinessException
 from core.src.use_cases import (
     CreateRecipe,
     CreateRecipeRequest,
+    DeleteRecipe,
+    DeleteRecipeRequest,
     EditRecipe,
     EditRecipeRequest,
     GetRecipeById,
@@ -15,6 +17,7 @@ from core.src.use_cases import (
 )
 from factories.use_cases import (
     create_recipe_use_case,
+    delete_recipe_use_case,
     edit_recipe_use_case,
     get_recipe_by_id_use_case,
     list_recipes_use_case,
@@ -87,3 +90,18 @@ async def edit_recipe(recipe: Recipe) -> Recipe:
 
     except BusinessException as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+@recipe_router.delete("/{recipe_id}")
+async def delete_recipe(recipe_id: str) -> RecipeDeleted:
+    try:
+        request = DeleteRecipeRequest(recipe_id=recipe_id)
+        delete_use_case: DeleteRecipe = delete_recipe_use_case()
+        response = delete_use_case(request=request)
+        return RecipeDeleted(recipe_id=recipe_id, is_archived=response.is_archived)  # type: ignore
+
+    except BusinessException as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    except Exception:
+        raise HTTPException(status_code=500, detail="An unexpected error occurred")
