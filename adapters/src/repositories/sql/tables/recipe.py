@@ -1,5 +1,5 @@
-import datetime
 import uuid
+from datetime import datetime, timezone
 
 from sqlalchemy import JSON, Boolean, Column, DateTime, String
 
@@ -15,6 +15,6 @@ class RecipeRecord(Base):
     steps = Column(JSON)
     image_url = Column(String)
     is_archived = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
-    updated_at = Column(DateTime, default=datetime.datetime.now(
-        datetime.UTC), onupdate=datetime.datetime.now(datetime.UTC))
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=datetime.now(
+        timezone.utc), onupdate=datetime.now(timezone.utc))

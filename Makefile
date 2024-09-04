@@ -1,6 +1,17 @@
 POETRY=poetry
+PYTHON=python3
+VENV_DIR=.venv
 
-install:
+.PHONY: create-env install run format lint test test-ci
+
+create-env:
+	$(PYTHON) -m venv $(VENV_DIR)
+	@echo "Virtual environment created in $(VENV_DIR)"
+
+update-db:
+	$(POETRY) run alembic upgrade head
+	
+install: 
 	$(POETRY) install
 
 run:

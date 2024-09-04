@@ -1,18 +1,6 @@
 version: '3.9'
 
 services:
-  meal-muse-db:
-    container_name: db-postgresql
-    image: postgres:14-alpine
-    ports:
-      - 5432:5432
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=mealmuse_db
-
   meal-muse-api:
     container_name: meal-muse-api
     build:
@@ -27,7 +15,32 @@ services:
       - ./adapters:/api/adapters/
     env_file:
       - .env
-    links:
-      - "meal-muse-db:database"
     depends_on:
       - meal-muse-db
+    networks:
+      - meal-muse-network
+
+  meal-muse-db:
+    container_name: meal-muse-db
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mealmuse_db
+    env_file:
+      - .env
+    networks:
+      - meal-muse-network
+
+networks:
+  meal-muse-network:
+
+
+volumes:
+  postgres-data:
+
+
