@@ -1,11 +1,14 @@
-FROM python:3.12
+FROM python:3.10-alpine
 
-COPY . /api
 WORKDIR /api
 
-RUN pip install poetry
-RUN poetry config virtualenvs.create false \
-    && poetry install
+COPY poetry.lock pyproject.toml /api/
 
-CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+RUN pip install poetry --no-cache-dir && \
+    poetry config virtualenvs.create false \
+    && poetry install --no-root
+
+COPY . /api
+
 EXPOSE 8000
+CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
